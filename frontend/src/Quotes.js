@@ -28,6 +28,7 @@ function Quotes() {
       .catch((err) => console.error("Error:", err));
   }, []); // [] = ทำครั้งเดียวตอน mount
 
+  
   return (
     <div>
       <h2>Users</h2>
