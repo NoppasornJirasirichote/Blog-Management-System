@@ -21,7 +21,8 @@ function Quotes() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/users")
+    const PORT = process.env.PORT || 5000;
+    fetch(`http://localhost:${PORT}/`)
       .then((res) => res.json())
       .then((data) => setUsers(data))
       .catch((err) => console.error("Error:", err));
