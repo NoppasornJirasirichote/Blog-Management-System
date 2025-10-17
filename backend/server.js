@@ -128,10 +128,14 @@ app.use(express.json());
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 // API: GET users
-app.get('/api/users', async (req, res) => {
-  const { data, error } = await supabase.from('users').select('*');
-  if (error) return res.status(400).json({ error: error.message });
-  res.json(data);
+// app.get('/api/users', async (req, res) => {
+//   const { data, error } = await supabase.from('users').select('*');
+//   if (error) return res.status(400).json({ error: error.message });
+//   res.json(data);
+// });
+
+app.get('/', (req, res) => {
+  res.send('Server is running!');
 });
 
 // API: POST user
