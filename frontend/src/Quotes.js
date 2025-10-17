@@ -22,13 +22,12 @@ function Quotes() {
 
   useEffect(() => {
     const PORT = process.env.PORT || 5000;
-    fetch(`http://localhost:${PORT}/`)
+    fetch("https://blog-management-system-back.onrender.com")
       .then((res) => res.json())
       .then((data) => setUsers(data))
       .catch((err) => console.error("Error:", err));
   }, []); // [] = ทำครั้งเดียวตอน mount
 
-  
   return (
     <div>
       <h2>Users</h2>
