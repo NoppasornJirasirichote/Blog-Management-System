@@ -118,8 +118,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const path = require('path'); // ต้อง import path
-app.use(express.static(path.join(__dirname, "../frontend/build")));
 const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
@@ -129,17 +127,24 @@ app.use(express.json());
 // เชื่อม Supabase
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-// API route
+// API: GET users
 app.get('/api/users', async (req, res) => {
   const { data, error } = await supabase.from('users').select('*');
   if (error) return res.status(400).json({ error: error.message });
   res.json(data);
 });
 
-// Serve React frontend
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+// API: POST user
+app.post('/api/users', async (req, res) => {
+  const { email, name, password } = req.body;
+  const { data, error } = await supabase
+    .from('users')
+    .insert([{ email, name, password }])
+    .select();
 
-app.get("*", (req, res) => { res.sendFile(path.join(__dirname, "../frontend/build", "index.html")); });
+  if (error) return res.status(400).json({ error: error.message });
+  res.json(data);
+});
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server running at http://localhost:${PORT}`));

@@ -21,7 +21,7 @@ function Quotes() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/users`)
+    fetch("http://localhost:5000/api/users")
       .then((res) => res.json())
       .then((data) => setUsers(data))
       .catch((err) => console.error("Error:", err));
