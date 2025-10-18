@@ -14,7 +14,7 @@ app.get('/', async (req, res) => {
     const { data, error } = await supabase.from('users').select('*');
     if (error) return res.status(400).json({ error: error.message });
     res.json(data);
-    
+
 });
 
 // API: GET users
@@ -32,7 +32,7 @@ app.post('/Register', async (req, res) => {
         .from('users')
         .select('email')
         .eq('email', email)
-        .single(); // ดึง 1 row
+        .single();
 
     if (checkError && checkError.code !== 'PGRST116') {
         // PGRST116 = ไม่มี row ไม่ใช่ error
@@ -54,7 +54,8 @@ app.post('/Register', async (req, res) => {
         return res.status(500).json({ error: error.message || "Insert failed" });
     }
 
-    //   res.json({ message: "Register สำเร็จ", data });
+    res.json({ message: "Register สำเร็จ", data });
+
 });
 
 app.post('/LoginPage', async (req, res) => {
@@ -259,4 +260,4 @@ app.delete('/api/blog/:id', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running at https://blog-management-system-fornt.onrender.com:${PORT}`));
+app.listen(PORT, () => console.log(`Server running at https://localhost:${PORT}`));
