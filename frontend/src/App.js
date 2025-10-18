@@ -5,7 +5,7 @@ import './App.css';
 import LoginPage from './LoginPage';
 import Home from './Home';
 import Register from './RegisterNew';
-import Blog from './Blog';
+import Blog from './BlogNew';
 import CreatePage from './CreatePage';
 import Edit from './Edit';
 
