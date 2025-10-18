@@ -4,66 +4,73 @@ const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
-app.use(cors());
+
+// ตั้งค่า CORS เพื่ออนุญาตเฉพาะ frontend
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true
+}));
 app.use(express.json());
 
 // เชื่อม Supabase
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
+// Root route เพื่อทดสอบ
 app.get('/', async (req, res) => {
+    res.json({ message: 'Backend API is running!' });
+});
+
+// API: GET all users (ถ้าไม่ใช้ สามารถ comment ออก)
+app.get('/api/users', async (req, res) => {
     const { data, error } = await supabase.from('users').select('*');
     if (error) return res.status(400).json({ error: error.message });
     res.json(data);
 });
 
-// API: GET users
-app.get('/get', async (req, res) => {
-    const { data, error } = await supabase.from('users').select('*');
-    if (error) return res.status(400).json({ error: error.message });
-    res.json(data);
-});
-
+// API: Register
 app.post('/Register', async (req, res) => {
     const { email, name, password } = req.body;
- console.log("Received email from query:", { email, name, password });
+    console.log("Received data for register:", { email, name, password });
+
     // ตรวจสอบว่ามี email อยู่แล้ว
     const { data: existingUser, error: checkError } = await supabase
         .from('users')
         .select('email')
         .eq('email', email)
-        .single(); // ดึง 1 row
+        .single();
 
     if (checkError && checkError.code !== 'PGRST116') {
-        // PGRST116 = ไม่มี row ไม่ใช่ error
-        console.log(checkError);
-        return res.status(500).json({ error: checkError.message || "Unknown error" });
+        console.error('Check user error:', checkError);
+        return res.status(500).json({ error: checkError.message || 'Unknown error' });
     }
 
     if (existingUser) {
-        return res.status(400).json({ error: "email นี้เคยลงทะเบียนแล้ว" });
+        return res.status(400).json({ error: 'email นี้เคยลงทะเบียนแล้ว' });
     }
 
-    // insert ใหม่
+    // Insert user ใหม่
     const { data, error } = await supabase
         .from('users')
         .insert([{ email, name, password }])
         .select();
 
     if (error) {
-        return res.status(500).json({ error: error.message || "Insert failed" });
+        console.error('Insert error:', error);
+        return res.status(500).json({ error: error.message || 'Insert failed' });
     }
 
-    //   res.json({ message: "Register สำเร็จ", data });
+    res.json({ success: true, message: 'Register สำเร็จ', data });
 });
 
+// API: Login
 app.post('/LoginPage', async (req, res) => {
     const { email, password } = req.body;
-console.log("Received email from query:", {email, password});
+    console.log("Received data for login:", { email, password });
+
     if (!email || !password) {
-        return res.status(400).json({ message: "กรุณากรอก email และ password" });
+        return res.status(400).json({ message: 'กรุณากรอก email และ password', success: false });
     }
 
-    // ตรวจสอบผู้ใช้ใน Supabase
     const { data: user, error } = await supabase
         .from('users')
         .select('*')
@@ -71,24 +78,23 @@ console.log("Received email from query:", {email, password});
         .single();
 
     if (error || !user) {
-        return res.status(400).json({ message: "ไม่พบ email หรือ password ไม่ถูกต้อง" });
+        return res.status(400).json({ message: 'ไม่พบ email หรือ password ไม่ถูกต้อง', success: false });
     }
 
     if (user.password !== password) {
-        return res.status(400).json({ message: "ไม่พบ email หรือ password ไม่ถูกต้อง" });
+        return res.status(400).json({ message: 'ไม่พบ email หรือ password ไม่ถูกต้อง', success: false });
     }
 
-    // Login สำเร็จ
-    res.json({ message: `Welcome ${user.email}` });
+    res.json({ success: true, message: `Welcome ${user.email}` });
 });
 
-app.get('/Home', async (req, res) => {
+// API: Get user data
+app.get('/api/user', async (req, res) => {
     const { email } = req.query;
-
-    console.log("Received email from query:", email);
+    console.log("Received email for user fetch:", email);
 
     if (!email) {
-        return res.status(400).json({ error: "กรุณาระบุ email" });
+        return res.status(400).json({ error: 'กรุณาระบุ email' });
     }
 
     try {
@@ -105,24 +111,24 @@ app.get('/Home', async (req, res) => {
         }
 
         if (!data) {
-            return res.status(404).json({ error: "ไม่พบผู้ใช้" });
+            return res.status(404).json({ error: 'ไม่พบผู้ใช้' });
         }
 
         res.json({ username: data.name });
     } catch (err) {
         console.error("Caught error:", err);
-        res.status(500).json({ error: "เกิดข้อผิดพลาดในการดึงข้อมูล" });
+        res.status(500).json({ error: 'เกิดข้อผิดพลาดในการดึงข้อมูล' });
     }
 });
 
+// API: Search blogs
 app.get('/api/search-blogs', async (req, res) => {
     try {
-        const { query } = req.query; // ได้ search term จาก query param
+        const { query } = req.query;
         if (!query || query.trim() === '') {
-            return res.json({ blogs: [] }); // ถ้าไม่มี query ส่งคืน empty
+            return res.json({ blogs: [] });
         }
 
-        // Query Supabase: ค้นหา header ที่มีคำค้น (case-insensitive ด้วย ilike)
         const { data: blogs, error } = await supabase
             .from('blog')
             .select('*')
@@ -130,19 +136,24 @@ app.get('/api/search-blogs', async (req, res) => {
 
         if (error) throw error;
 
-        res.json({ blogs }); // ส่งคืน array ของ blogs
+        res.json({ blogs });
     } catch (error) {
         console.error('Search error:', error);
         res.status(500).json({ error: 'Search failed' });
     }
 });
 
+// API: Get all blogs
 app.get('/api/all-blogs', async (req, res) => {
     const { data, error } = await supabase.from('blog').select('*');
-    if (error) return res.status(400).json({ error: error.message });
+    if (error) {
+        console.error('Fetch all blogs error:', error);
+        return res.status(400).json({ error: error.message });
+    }
     res.json(data);
 });
 
+// API: Get single blog
 app.get('/api/blog/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -151,10 +162,10 @@ app.get('/api/blog/:id', async (req, res) => {
             .from('blog')
             .select('*')
             .eq('id', id)
-            .single(); // Use .single() for a single record
+            .single();
         if (error) {
             console.error('Supabase fetch blog error:', error.message, error.details);
-            if (error.code === 'PGRST116') { // No row found
+            if (error.code === 'PGRST116') {
                 return res.status(404).json({ error: 'Blog not found' });
             }
             throw error;
@@ -167,24 +178,24 @@ app.get('/api/blog/:id', async (req, res) => {
     }
 });
 
-
-app.get('/Edit/:id', async (req, res) => {
+// API: Get blog for edit
+app.get('/api/blog/:id/edit', async (req, res) => {
     try {
         const { id } = req.params;
-        console.log('Fetching blog with id:', id);
+        console.log('Fetching blog for edit with id:', id);
         const { data: blog, error } = await supabase
             .from('blog')
             .select('*')
             .eq('id', id)
-            .single(); // Use .single() for a single record
+            .single();
         if (error) {
             console.error('Supabase fetch blog error:', error.message, error.details);
-            if (error.code === 'PGRST116') { // No row found
+            if (error.code === 'PGRST116') {
                 return res.status(404).json({ error: 'Blog not found' });
             }
             throw error;
         }
-        console.log('Blog fetched:', blog);
+        console.log('Blog fetched for edit:', blog);
         res.json(blog);
     } catch (error) {
         console.error('Fetch blog error:', error);
@@ -192,6 +203,7 @@ app.get('/Edit/:id', async (req, res) => {
     }
 });
 
+// API: Update blog
 app.put('/api/blog/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -216,6 +228,7 @@ app.put('/api/blog/:id', async (req, res) => {
     }
 });
 
+// API: Create blog
 app.post('/api/CreatePage', async (req, res) => {
     try {
         const { header, blog, created_by, created_date } = req.body;
@@ -227,7 +240,7 @@ app.post('/api/CreatePage', async (req, res) => {
         const { data, error } = await supabase
             .from('blog')
             .insert([{ header, blog, created_by, created_date }])
-            .select(); 
+            .select();
 
         if (error) throw error;
 
@@ -238,10 +251,11 @@ app.post('/api/CreatePage', async (req, res) => {
     }
 });
 
+// API: Delete blog
 app.delete('/api/blog/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        console.log('Received DELETE request for id:', id); // เพิ่ม log
+        console.log('Received DELETE request for id:', id);
 
         const { error } = await supabase
             .from('blog')
@@ -258,4 +272,8 @@ app.delete('/api/blog/:id', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+const HOST = process.env.HOST || '0.0.0.0';
+app.listen(PORT, HOST, () => {
+    const baseUrl = process.env.BACKEND_URL || `http://localhost:${PORT}`;
+    console.log(`Server running at ${baseUrl}`);
+});
