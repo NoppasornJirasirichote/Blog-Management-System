@@ -10,9 +10,6 @@ function Register() {
     const [message, setMessage] = useState("");
     const API_URL = process.env.REACT_APP_API_URL;
 
-
-
-
     const navigate = useNavigate();
 
     // const goToHome = () => {
@@ -24,7 +21,7 @@ function Register() {
         e.preventDefault();
         console.log("กำลังส่งข้อมูลไป backend:", { email, name, password });
         try {
-            const res = await axios.post(`http://localhost:3000/Register`, { email, name, password });
+            const res = await axios.post(`http://localhost:3000/Re`, { email, name, password });
             console.log("Response จาก backend:", res.data);
             navigate("/Home", { state: { email: email } });
             setMessage(res.data.message);
