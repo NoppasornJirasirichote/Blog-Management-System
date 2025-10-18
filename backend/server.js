@@ -258,4 +258,4 @@ app.delete('/api/blog/:id', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running at https://blog-management-system-fornt.onrender.com:${PORT}`));
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
