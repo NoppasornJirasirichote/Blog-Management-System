@@ -25,7 +25,7 @@ app.get('/get', async (req, res) => {
 
 app.post('/Register', async (req, res) => {
     const { email, name, password } = req.body;
- console.log("Received email from query:", { email, name, password });
+    console.log("Received email from query:", { email, name, password });
     // ตรวจสอบว่ามี email อยู่แล้ว
     const { data: existingUser, error: checkError } = await supabase
         .from('users')
@@ -58,7 +58,7 @@ app.post('/Register', async (req, res) => {
 
 app.post('/LoginPage', async (req, res) => {
     const { email, password } = req.body;
-console.log("Received email from query:", {email, password});
+    console.log("Received email from query:", { email, password });
     if (!email || !password) {
         return res.status(400).json({ message: "กรุณากรอก email และ password" });
     }
@@ -227,7 +227,7 @@ app.post('/api/CreatePage', async (req, res) => {
         const { data, error } = await supabase
             .from('blog')
             .insert([{ header, blog, created_by, created_date }])
-            .select(); 
+            .select();
 
         if (error) throw error;
 
