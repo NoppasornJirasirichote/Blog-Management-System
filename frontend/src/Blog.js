@@ -112,6 +112,8 @@ function Blog() {
         }
     };
 
+
+    
     const handleBack = () => {
         navigate('/Home', { state: { email } });
     };
