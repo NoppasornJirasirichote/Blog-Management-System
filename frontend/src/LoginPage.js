@@ -19,7 +19,7 @@ function LoginPage() {
         e.preventDefault();
         console.log("กำลังส่งข้อมูลไป backend:", { email, password });
         try {
-            const res = await axios.post("http://localhost:5000/LoginPage", {
+            const res = await axios.post("https://blog-management-system-fornt.onrender.com/LoginPage", {
                 email,
                 password
             });

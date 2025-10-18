@@ -20,7 +20,7 @@ function Register() {
         e.preventDefault();
         console.log("กำลังส่งข้อมูลไป backend:", { email, name, password });
         try {
-            const res = await axios.post("http://localhost:5000/Register", { email, name, password });
+            const res = await axios.post("https://blog-management-system-fornt.onrender.com/Register", { email, name, password });
             console.log("Response จาก backend:", res.data);
             navigate("/Home", { state: { email: email } });
             setMessage(res.data.message);

@@ -24,7 +24,7 @@ function Edit() {
             if (email) {
                 console.log("Fetching user data for email:", email);
                 try {
-                    const res = await axios.get(`http://localhost:5000/Home`, {
+                    const res = await axios.get(`https://blog-management-system-fornt.onrender.com/Home`, {
                         params: { email }
                     });
                     setUsername(res.data.username || "ไม่พบชื่อผู้ใช้");
@@ -45,7 +45,7 @@ function Edit() {
             }
             try {
                 console.log(`Fetching blog with id: ${id}`);
-                const response = await axios.get(`http://localhost:5000/Edit/${id}`);
+                const response = await axios.get(`https://blog-management-system-fornt.onrender.com/Edit/${id}`);
                 console.log('Blog data:', response.data);
                 setHeader(response.data.header || "");
                 setBlog(response.data.blog || "");
@@ -59,7 +59,7 @@ function Edit() {
         const fetchAllBlogs = async () => {
             try {
                 console.log("Attempting to fetch all blogs from /api/all-blogs");
-                const response = await axios.get(`http://localhost:5000/api/all-blogs`);
+                const response = await axios.get(`https://blog-management-system-fornt.onrender.com/api/all-blogs`);
                 console.log("All Blogs Response:", response.data);
                 if (response.data && Array.isArray(response.data)) {
                     setAllBlogs(response.data);
@@ -83,7 +83,7 @@ function Edit() {
             return;
         }
         try {
-            const response = await axios.get(`http://localhost:5000/api/search-blogs?query=${encodeURIComponent(term)}`);
+            const response = await axios.get(`https://blog-management-system-fornt.onrender.com/api/search-blogs?query=${encodeURIComponent(term)}`);
             console.log("API Response:", response.data);
             setSearchResults(response.data.blogs || []);
             setError(null);
@@ -108,7 +108,7 @@ function Edit() {
         }
 
         try {
-            const response = await axios.get(`http://localhost:5000/api/search-blogs?query=${encodeURIComponent(searchTerm)}`);
+            const response = await axios.get(`https://blog-management-system-fornt.onrender.com/api/search-blogs?query=${encodeURIComponent(searchTerm)}`);
             console.log("API Response:", response.data);
             const searchResults = response.data.blogs || response.data || [];
             console.log("Search results to send:", searchResults);
@@ -152,7 +152,7 @@ function Edit() {
         };
 
         try {
-            await axios.put(`http://localhost:5000/api/blog/${id}`, blogData);
+            await axios.put(`https://blog-management-system-fornt.onrender.com/api/blog/${id}`, blogData);
             console.log("Blog updated successfully");
             setError(null);
             navigate('/Home', { state: { email } });

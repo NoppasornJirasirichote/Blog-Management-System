@@ -23,7 +23,7 @@ function CreatePage() {
             if (email) {
                 console.log("Fetching user data for email:", email);
                 try {
-                    const res = await axios.get(`http://localhost:5000/Home`, {
+                    const res = await axios.get(`https://blog-management-system-fornt.onrender.com/Home`, {
                         params: { email }
                     });
                     setUsername(res.data.username || "ไม่พบชื่อผู้ใช้");
@@ -41,7 +41,7 @@ function CreatePage() {
         const fetchAllBlogs = async () => {
             try {
                 console.log("Attempting to fetch all blogs from /api/all-blogs");
-                const response = await axios.get(`http://localhost:5000/api/all-blogs`);
+                const response = await axios.get(`https://blog-management-system-fornt.onrender.com/api/all-blogs`);
                 console.log("All Blogs Response:", response.data);
                 if (response.data && Array.isArray(response.data)) {
                     setAllBlogs(response.data);
@@ -67,7 +67,7 @@ function CreatePage() {
             return;
         }
         try {
-            const response = await axios.get(`http://localhost:5000/api/search-blogs?query=${encodeURIComponent(term)}`);
+            const response = await axios.get(`https://blog-management-system-fornt.onrender.com/api/search-blogs?query=${encodeURIComponent(term)}`);
             console.log("API Response:", response.data);
             setSearchResults(response.data.blogs || []);
             setError(null);
@@ -92,7 +92,7 @@ function CreatePage() {
         }
 
         try {
-            const response = await axios.get(`http://localhost:5000/api/search-blogs?query=${encodeURIComponent(searchTerm)}`);
+            const response = await axios.get(`https://blog-management-system-fornt.onrender.com/api/search-blogs?query=${encodeURIComponent(searchTerm)}`);
             console.log("API Response:", response.data);
             const searchResults = response.data.blogs || response.data || [];
             console.log("Search results to send:", searchResults);
@@ -135,7 +135,7 @@ function CreatePage() {
         };
 
         try {
-            const response = await axios.post('http://localhost:5000/api/CreatePage', blogData);
+            const response = await axios.post('https://blog-management-system-fornt.onrender.com/api/CreatePage', blogData);
             console.log("Blog created successfully:", response.data);
             setError(null);
             setHeader("");
