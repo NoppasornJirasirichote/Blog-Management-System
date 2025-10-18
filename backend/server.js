@@ -10,6 +10,12 @@ app.use(express.json());
 // เชื่อม Supabase
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
+app.get('/', async (req, res) => {
+    const { data, error } = await supabase.from('users').select('*');
+    if (error) return res.status(400).json({ error: error.message });
+    res.json(data);
+});
+
 // API: GET users
 app.get('/get', async (req, res) => {
     const { data, error } = await supabase.from('users').select('*');
@@ -19,7 +25,7 @@ app.get('/get', async (req, res) => {
 
 app.post('/Register', async (req, res) => {
     const { email, name, password } = req.body;
-
+ console.log("Received email from query:", { email, name, password });
     // ตรวจสอบว่ามี email อยู่แล้ว
     const { data: existingUser, error: checkError } = await supabase
         .from('users')
