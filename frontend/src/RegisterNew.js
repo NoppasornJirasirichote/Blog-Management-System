@@ -11,23 +11,24 @@ function Register() {
 
     const navigate = useNavigate();
 
-    const goToHome = () => {
-        navigate('/Home');
-    }
+    // const goToHome = () => {
+    //     navigate('/Home');
+    // }
 
 
     const handleRegister = async (e) => {
-    e.preventDefault();
-    console.log("กำลังส่งข้อมูลไป backend:", { email, name, password });
-    try {
-        const res = await axios.post("http://localhost:5000/Register", { email, name, password });
-        console.log("Response จาก backend:", res.data);
-        setMessage(res.data.message); 
-    } catch (err) {
-        console.log("Error Response:", err.response?.data);
-        setMessage(err.response?.data?.error || "เกิดข้อผิดพลาด");
-    }
-};
+        e.preventDefault();
+        console.log("กำลังส่งข้อมูลไป backend:", { email, name, password });
+        try {
+            const res = await axios.post("http://localhost:5000/Register", { email, name, password });
+            console.log("Response จาก backend:", res.data);
+            navigate("/Home", { state: { email: email } });
+            setMessage(res.data.message);
+        } catch (err) {
+            console.log("Error Response:", err.response?.data);
+            setMessage(err.response?.data?.error || "เกิดข้อผิดพลาด");
+        }
+    };
 
     return (
         <div style={{ maxWidth: "400px", margin: "50px auto" }}>
@@ -60,10 +61,7 @@ function Register() {
                     minLength={8}
                     style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
-                <button onClick={goToHome} type="submit"  style={{ width: "100%", height: "35px", fontSize: "16px" }}>Submit</button>
-
-
-
+                <button type="submit" style={{ width: "100%", height: "35px", fontSize: "16px" }}>Submit</button>
             </form>
             {message && (
                 <p style={{ color: message.startsWith("Welcome") ? "green" : "red", marginTop: "10px" }}>
