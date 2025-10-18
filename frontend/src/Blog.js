@@ -22,7 +22,7 @@ function Blog() {
             if (email) {
                 console.log("Fetching user data for email:", email);
                 try {
-                    const res = await axios.get('https://blog-management-system-fornt.onrender.com/Home', {
+                    const res = await axios.get('https://blog-management-system-back.onrender.com/Home', {
                         params: { email }
                     });
                     setUsername(res.data.username || "ไม่พบชื่อผู้ใช้");
@@ -46,7 +46,7 @@ function Blog() {
             }
             try {
                 console.log(`Fetching blog with id: ${id}`); // แก้ไข template literal
-                const response = await axios.get(`https://blog-management-system-fornt.onrender.com/api/blog/${id}`); // ใช้ id แทน :id
+                const response = await axios.get(`https://blog-management-system-back.onrender.com/api/blog/${id}`); // ใช้ id แทน :id
                 console.log('Blog data:', response.data);
                 setBlog(response.data);
                 setError(null);
@@ -69,7 +69,7 @@ function Blog() {
             return;
         }
         try {
-            const response = await axios.get(`https://blog-management-system-fornt.onrender.com/api/search-blogs?query=${encodeURIComponent(term)}`);
+            const response = await axios.get(`https://blog-management-system-back.onrender.com/api/search-blogs?query=${encodeURIComponent(term)}`);
             console.log("API Response:", response.data);
             setSearchResults(response.data.blogs || []);
             setError(null);
@@ -101,7 +101,7 @@ function Blog() {
         if (blog) {
             if (window.confirm('คุณแน่ใจหรือไม่ว่าต้องการลบ blog นี้?')) {
                 try {
-                    await axios.delete(`https://blog-management-system-fornt.onrender.com/api/blog/${id}`);
+                    await axios.delete(`https://blog-management-system-back.onrender.com/api/blog/${id}`);
                     console.log('Blog deleted successfully');
                     navigate('/Home', { state: { email } }); // กลับไปหน้า Home หลังลบ
                 } catch (err) {
