@@ -85,10 +85,39 @@ function Blog() {
         setSearchTerm(term);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("Submit clicked with search term:", searchTerm);
-        handleSearch(searchTerm);
+
+        if (!searchTerm.trim()) {
+            navigate('/Home', { state: { email } });
+            return;
+        }
+
+        try {
+            const response = await axios.get(`https://blog-management-system-back.onrender.com/api/search-blogs?query=${encodeURIComponent(searchTerm)}`);
+            console.log("API Response:", response.data);
+            const searchResults = response.data.blogs || response.data || [];
+            console.log("Search results to send:", searchResults);
+
+            navigate('/Home', {
+                state: {
+                    email,
+                    searchResults,
+                    searchTerm
+                }
+            });
+        } catch (error) {
+            console.error('Search error:', error);
+            navigate('/Home', {
+                state: {
+                    email,
+                    searchResults: [],
+                    searchTerm,
+                    searchError: "เกิดข้อผิดพลาดในการค้นหา"
+                }
+            });
+        }
     };
     const handleEdit = () => {
         if (blog) {
