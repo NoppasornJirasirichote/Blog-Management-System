@@ -60,7 +60,7 @@ function BlogNew() {
 
         fetchBlog();
         fetchUserData();
-    }, [email, id]); // เพิ่ม id เป็น dependency
+    }, [email, id]);
     const handleSearch = async (term) => {
         if (!term.trim()) {
             setSearchResults([]);
@@ -116,8 +116,8 @@ function BlogNew() {
     };
     const handleEdit = () => {
         if (blog) {
-            console.log('Navigating to edit with id:', id); // เพิ่ม log เพื่อตรวจสอบ
-            navigate(`/edit/${id}`, { state: { email, blog } }); // ใช้ backticks
+            console.log('Navigating to edit with id:', id);
+            navigate(`/edit/${id}`, { state: { email, blog } });
         }
     };
     const handleDelete = async () => {

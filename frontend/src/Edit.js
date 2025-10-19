@@ -13,8 +13,8 @@ function Edit() {
     const [searchResults, setSearchResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [error, setError] = useState(null);
-    const [header, setHeader] = useState(""); // State สำหรับชื่อ blog
-    const [blog, setBlog] = useState(""); // State สำหรับข้อความใน blog
+    const [header, setHeader] = useState("");
+    const [blog, setBlog] = useState("");
     const location = useLocation();
     const email = location.state?.email || "";
     const navigate = useNavigate();
@@ -142,7 +142,7 @@ function Edit() {
             header,
             blog,
             created_by: username,
-            created_date: new Date().toISOString().split('T')[0], // วันที่ปัจจุบัน
+            created_date: new Date().toISOString().split('T')[0],
         };
         try {
             await axios.put(`https://blog-management-system-back.onrender.com/api/blog/${id}`, blogData);

@@ -26,7 +26,7 @@ function LoginPage() {
                 password
             });
             console.log("Response จาก backend:", res.data);
-            navigate("/home", { state: { email: email } }); // ไปหน้า home
+            navigate("/home", { state: { email: email } });
             setMessage(res.data.message);
         } catch (err) {
             console.log("Error Response:", err.response?.data);
@@ -35,7 +35,7 @@ function LoginPage() {
     };
 
     return (
-        <div style={{ maxWidth: "400px", margin: "50px auto",flexDirection: "column",alignItems: "center",display: "flex" }}>
+        <div style={{ maxWidth: "400px", margin: "50px",flexDirection: "column",alignItems: "center",display: "flex" }}>
             <h2>Login</h2>
             <form onSubmit={handleLogin}>
                 <input
@@ -44,7 +44,7 @@ function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
+                    style={{ width: "380px", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
                 <input
                     type="password"
@@ -52,7 +52,7 @@ function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
+                    style={{ width: "380px", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
                 <button type="submit" className={styles.butsubmit}>Login</button>
                 <button onClick={goToRegister} className={styles.butregister} >register</button>

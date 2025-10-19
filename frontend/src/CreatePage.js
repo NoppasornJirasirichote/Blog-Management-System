@@ -12,8 +12,8 @@ function CreatePage() {
     const [searchResults, setSearchResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [error, setError] = useState(null);
-    const [header, setHeader] = useState(""); // เพิ่ม state สำหรับชื่อ blog
-    const [blog, setBlog] = useState(""); // เพิ่ม state สำหรับข้อความใน blog
+    const [header, setHeader] = useState("");
+    const [blog, setBlog] = useState(""); 
     const location = useLocation();
     const email = location.state?.email || "";
     const navigate = useNavigate();

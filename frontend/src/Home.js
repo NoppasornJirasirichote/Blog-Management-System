@@ -55,7 +55,7 @@ function Home() {
         };
         if (location.state?.searchResults) {
             setSearchResults(location.state.searchResults);
-            setSearchTerm(location.state.searchTerm || ""); // อัปเดต searchTerm ถ้ามี
+            setSearchTerm(location.state.searchTerm || "");
         }
 
         fetchUserData();
