@@ -13,7 +13,7 @@ const Header = ({ username, searchTerm, handleInputChange, handleSubmit, email }
                     onChange={handleInputChange}
                     style={{ marginRight: "10px" }}
                 />
-                <button type="submit" className={styles.butsubmithead}>Submit</button>
+                <button type="submit" >Submit</button>
             </form>
             <div style={{ width: "18%", marginLeft: "-18%", display: "flex", marginTop: "12px" }}>
                 <div style={{ paddingRight: "5px", paddingTop: "4px" }}>

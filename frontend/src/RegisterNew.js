@@ -38,7 +38,7 @@ function Register() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
+                    style={{ width: "382px", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
                 <input
                     type="name"
@@ -48,7 +48,7 @@ function Register() {
                     required
                     minLength={4}
                     maxLength={20}
-                    style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
+                    style={{ width: "382px", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
                 <input
                     type="password"
@@ -57,7 +57,7 @@ function Register() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength={8}
-                    style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
+                    style={{ width: "382px", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
                 <button type="submit" className={styles.butsubmit}>Submit</button>
             </form>
