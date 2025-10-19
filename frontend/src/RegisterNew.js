@@ -58,17 +58,7 @@ function Register() {
                     minLength={8}
                     style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
-                <button type="submit" style={{  width: "100%",
-    height: "45px",
-    fontSize: "16px",
-    fontWeight: "bold",
-    color: "#fff",
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    border: "none",
-    borderRadius: "10px",
-    cursor: "pointer",
-    boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
-    transition: "all 0.3s ease", }}>Submit</button>
+                <button type="submit" className={styles.butsubmit}>Submit</button>
             </form>
             {message && (
                 <p style={{ color: message.startsWith("Welcome") ? "green" : "red", marginTop: "10px" }}>

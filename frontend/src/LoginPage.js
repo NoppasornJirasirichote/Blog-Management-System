@@ -52,8 +52,8 @@ function LoginPage() {
                     required
                     style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
-                <button type="submit" style={{ width: "100%", height: "35px", fontSize: "16px" }}>Login</button>
-                <button onClick={goToRegister} style={{ width: "100%", height: "35px", fontSize: "16px" }}>register</button>
+                <button type="submit" className={styles.butsubmit}>Login</button>
+                <button onClick={goToRegister} className={styles.butsubmit} >register</button>
             </form>
             {message && (
                 <p style={{ color: message.startsWith("Welcome") ? "green" : "red", marginTop: "10px" }}>
