@@ -53,8 +53,6 @@ function Home() {
                 setError("ไม่สามารถดึงข้อมูลทั้งหมดได้");
             }
         };
-
-        // ตรวจจับ searchResults จาก location.state
         if (location.state?.searchResults) {
             setSearchResults(location.state.searchResults);
             setSearchTerm(location.state.searchTerm || ""); // อัปเดต searchTerm ถ้ามี
@@ -63,7 +61,6 @@ function Home() {
         fetchUserData();
         fetchAllBlogs();
     }, [email, location.state]);
-
     const handleSearch = async (term) => {
         if (!term.trim()) {
             setSearchResults([]);
@@ -81,33 +78,20 @@ function Home() {
             setError("เกิดข้อผิดพลาดในการค้นหา");
         }
     };
-
     const handleInputChange = (event) => {
         setSearchTerm(event.target.value);
     };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("Submit clicked with search term:", searchTerm);
         await handleSearch(searchTerm);
     };
-
     const handleCreate = () => {
         navigate('/CreatePage', { state: { email } });
     };
-
     if (loading) return <p>กำลังโหลด...</p>;
-
     return (
-        <div style={{
-            width: "100%",
-            minHeight: "100vh",
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            display: "flex",
-        }}>
+        <div className={styles.all}>
             <Header
                 username={username}
                 searchTerm={searchTerm}

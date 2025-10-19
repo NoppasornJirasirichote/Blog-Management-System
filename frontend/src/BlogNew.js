@@ -61,7 +61,6 @@ function BlogNew() {
         fetchBlog();
         fetchUserData();
     }, [email, id]); // เพิ่ม id เป็น dependency
-
     const handleSearch = async (term) => {
         if (!term.trim()) {
             setSearchResults([]);
@@ -79,12 +78,10 @@ function BlogNew() {
             setError("เกิดข้อผิดพลาดในการค้นหา");
         }
     };
-
     const handleInputChange = (event) => {
         const term = event.target.value;
         setSearchTerm(term);
     };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("Submit clicked with search term:", searchTerm);
@@ -93,13 +90,11 @@ function BlogNew() {
             navigate('/Home', { state: { email } });
             return;
         }
-
         try {
             const response = await axios.get(`https://blog-management-system-back.onrender.com/api/search-blogs?query=${encodeURIComponent(searchTerm)}`);
             console.log("API Response:", response.data);
             const searchResults = response.data.blogs || response.data || [];
             console.log("Search results to send:", searchResults);
-
             navigate('/Home', {
                 state: {
                     email,
@@ -125,7 +120,6 @@ function BlogNew() {
             navigate(`/edit/${id}`, { state: { email, blog } }); // ใช้ backticks
         }
     };
-
     const handleDelete = async () => {
         if (blog) {
             if (window.confirm('คุณแน่ใจหรือไม่ว่าต้องการลบ blog นี้?')) {
@@ -140,9 +134,6 @@ function BlogNew() {
             }
         }
     };
-
-
-
     const handleBack = () => {
         navigate('/Home', { state: { email } });
     };
@@ -150,15 +141,7 @@ function BlogNew() {
     if (loading) return <p>กำลังโหลด...</p>;
 
     return (
-        <div style={{
-            width: "100%",
-            minHeight: "100vh",
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            display: "flex",
-        }}>
+        <div className={styles.all}>
             <Header
                 username={username}
                 searchTerm={searchTerm}
@@ -190,7 +173,6 @@ function BlogNew() {
                     Back
                 </button>
             </div>
-
             <div className={styles.list}>
                 {error && <p style={{ padding: "10px", color: "red" }}>{error}</p>}
                 {blog && (

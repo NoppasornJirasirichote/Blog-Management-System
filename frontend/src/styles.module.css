@@ -153,3 +153,13 @@
     align-items: center;
 
 }
+
+.all{
+    width: "100%";
+        min-Height: "100vh";
+            flex: 1;
+            flex-Direction: "column";
+            justify-Content: "flex-start";
+            align-Items: "center";
+            display: "flex";
+}

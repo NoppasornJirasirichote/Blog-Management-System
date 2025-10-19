@@ -101,18 +101,15 @@ function Edit() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("Submit clicked with search term:", searchTerm);
-
         if (!searchTerm.trim()) {
             navigate('/Home', { state: { email } });
             return;
         }
-
         try {
             const response = await axios.get(`https://blog-management-system-back.onrender.com/api/search-blogs?query=${encodeURIComponent(searchTerm)}`);
             console.log("API Response:", response.data);
             const searchResults = response.data.blogs || response.data || [];
             console.log("Search results to send:", searchResults);
-
             navigate('/Home', {
                 state: {
                     email,
@@ -132,25 +129,21 @@ function Edit() {
             });
         }
     };
-
     const handleHome = () => {
         navigate('/Home', { state: { email } });
     };
-
     const handleUpdateBlog = async (event) => {
         event.preventDefault();
         if (!header.trim() || !blog.trim()) {
             setError("กรุณากรอกชื่อ blog และข้อความ");
             return;
         }
-
         const blogData = {
             header,
             blog,
             created_by: username,
             created_date: new Date().toISOString().split('T')[0], // วันที่ปัจจุบัน
         };
-
         try {
             await axios.put(`https://blog-management-system-back.onrender.com/api/blog/${id}`, blogData);
             console.log("Blog updated successfully");
@@ -165,15 +158,7 @@ function Edit() {
     if (loading) return <p>กำลังโหลด...</p>;
 
     return (
-        <div style={{
-            width: "100%",
-            minHeight: "100vh",
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            display: "flex",
-        }}>
+        <div className={styles.all}>
             <Header
                 username={username}
                 searchTerm={searchTerm}

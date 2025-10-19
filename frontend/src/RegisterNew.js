@@ -11,12 +11,9 @@ function Register() {
     const API_URL = process.env.REACT_APP_API_URL;
 
     const navigate = useNavigate();
-
     // const goToHome = () => {
     //     navigate('/Home');
     // }
-
-
     const handleRegister = async (e) => {
         e.preventDefault();
         console.log("กำลังส่งข้อมูลไป backend:", { email, name, password });
@@ -30,7 +27,6 @@ function Register() {
             setMessage(err.response?.data?.error || "เกิดข้อผิดพลาด");
         }
     };
-
     return (
         <div style={{ maxWidth: "400px", margin: "50px auto" }}>
             <h2>Register</h2>
@@ -62,7 +58,17 @@ function Register() {
                     minLength={8}
                     style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
-                <button type="submit" style={{ width: "100%", height: "35px", fontSize: "16px" }}>Submit</button>
+                <button type="submit" style={{  width: "100%",
+    height: "45px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    color: "#fff",
+    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    border: "none",
+    borderRadius: "10px",
+    cursor: "pointer",
+    boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
+    transition: "all 0.3s ease", }}>Submit</button>
             </form>
             {message && (
                 <p style={{ color: message.startsWith("Welcome") ? "green" : "red", marginTop: "10px" }}>

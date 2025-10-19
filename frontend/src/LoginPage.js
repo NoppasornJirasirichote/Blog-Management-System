@@ -52,7 +52,6 @@ function LoginPage() {
                     required
                     style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
-                
                 <button type="submit" style={{ width: "100%", height: "35px", fontSize: "16px" }}>Login</button>
                 <button onClick={goToRegister} style={{ width: "100%", height: "35px", fontSize: "16px" }}>register</button>
             </form>
@@ -66,41 +65,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
-
-
-
-//   import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import { useNavigate } from 'react-router-dom';
-
-// function LoginPage() {
-//     const [users, setUsers] = useState([]);
-
-//   useEffect(() => {
-//     const PORT = process.env.PORT || 5000;
-//     // fetch(`http://localhost:${PORT}/`)
-//     fetch("https://blog-management-system-back.onrender.com")
-//       .then((res) => res.json())
-//       .then((data) => setUsers(data))
-//       .catch((err) => console.error("Error:", err));
-//   }, []); // [] = ทำครั้งเดียวตอน mount
-
-  
-//   return (
-//     <div>
-//       <h2>Users</h2>
-//       <ul>
-//         {users.map((u, idx) => (
-//           <li key={idx}>
-//             {u.name} ({u.email})
-//           </li>
-//         ))}
-
-
-//       </ul>
-//     </div>
-//   );
-// }
-
-// export default LoginPage;

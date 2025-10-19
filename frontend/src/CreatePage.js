@@ -150,15 +150,7 @@ function CreatePage() {
     if (loading) return <p>กำลังโหลด...</p>;
 
     return (
-        <div style={{
-            width: "100%",
-            minHeight: "100vh",
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            display: "flex",
-        }}>
+        <div className={styles.all}>
             <Header
                 username={username}
                 searchTerm={searchTerm}
@@ -166,11 +158,6 @@ function CreatePage() {
                 handleSubmit={handleSubmit}
                 email={email}
             />
-            {/* <div className={styles.butHome}>
-                <button className={styles.createButtonHome} onClick={handleHome}>
-                    Home
-                </button>
-            </div> */}
             <div className={styles.list}>
                 <form onSubmit={handleCreateBlog} style={{ width: "80%", padding: "20px" }}>
                     <div>
