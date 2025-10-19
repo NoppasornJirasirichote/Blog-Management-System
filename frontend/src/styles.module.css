@@ -165,7 +165,7 @@
 }
 
 .butsubmit {
-    width: 100%;
+    width: 300px; 
     height: 45px;
     font-size: 16px;
     font-weight: bold;
@@ -176,6 +176,7 @@
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
+    margin-bottom: 10px;
 }
 
 
@@ -194,7 +195,7 @@
 }
 
 .butregister {
-    width: 100%;
+    width: 300px; 
     height: 45px;
     font-size: 16px;
     font-weight: bold;
@@ -205,4 +206,5 @@
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
+    margin-bottom: 10px;
 }
