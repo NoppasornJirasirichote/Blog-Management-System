@@ -44,7 +44,7 @@ function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    style={{ width: "300px", height: "30px", marginBottom: "10px", padding: "5px" }}
+                    style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
                 <input
                     type="password"
@@ -52,7 +52,7 @@ function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    style={{ width: "300px", height: "30px", marginBottom: "10px", padding: "5px" }}
+                    style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
                 <button type="submit" className={styles.butsubmit}>Login</button>
                 <button onClick={goToRegister} className={styles.butregister} >register</button>
