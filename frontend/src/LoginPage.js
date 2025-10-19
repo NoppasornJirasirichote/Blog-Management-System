@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import styles from './styles.module.css';
+
 
 function LoginPage() {
     const [email, setEmail] = useState("");
@@ -53,7 +55,7 @@ function LoginPage() {
                     style={{ width: "100%", height: "30px", marginBottom: "10px", padding: "5px" }}
                 />
                 <button type="submit" className={styles.butsubmit}>Login</button>
-                <button onClick={goToRegister} className={styles.butsubmit} >register</button>
+                <button onClick={goToRegister} className={styles.butregister} >register</button>
             </form>
             {message && (
                 <p style={{ color: message.startsWith("Welcome") ? "green" : "red", marginTop: "10px" }}>
