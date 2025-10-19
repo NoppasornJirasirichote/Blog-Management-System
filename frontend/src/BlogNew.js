@@ -141,7 +141,15 @@ function BlogNew() {
     if (loading) return <p>กำลังโหลด...</p>;
 
     return (
-        <div className={styles.all}>
+        <div style={{
+            width: "100%",
+            minHeight: "100vh",
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            display: "flex",
+        }}>
             <Header
                 username={username}
                 searchTerm={searchTerm}
