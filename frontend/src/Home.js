@@ -91,7 +91,15 @@ function Home() {
     };
     if (loading) return <p>กำลังโหลด...</p>;
     return (
-        <div className={styles.all}>
+        <div style={{
+            width: "100%",
+            minHeight: "100vh",
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            display: "flex",
+        }}>
             <Header
                 username={username}
                 searchTerm={searchTerm}
@@ -99,7 +107,7 @@ function Home() {
                 handleSubmit={handleSubmit}
                 email={email}
             />
-             <div className={styles.but}>
+            <div className={styles.but}>
                 <button className={styles.createButton} onClick={handleCreate}>
                     Create
                 </button>
